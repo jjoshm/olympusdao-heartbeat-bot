@@ -100,7 +100,7 @@ impl<K: Middleware> Bot<K> {
 
         let mut beat_tx = self.contract.beat().tx;
 
-        beat_tx.set_from(self.provider.get_accounts().await.unwrap()[0]);
+        beat_tx.set_from(self.signer.address());
         let mut stream = self.provider.watch_blocks().await.unwrap().stream();
         let mut block_counter = 0;
         while let Some(_block) = stream.next().await {
