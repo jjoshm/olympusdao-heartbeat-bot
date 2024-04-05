@@ -13,7 +13,7 @@ use ethers::{
 };
 use indicatif::{ProgressBar, ProgressState, ProgressStyle};
 use reqwest::Client;
-use std::fmt::Write;
+use std::{fmt::Write, u128};
 use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
@@ -118,7 +118,7 @@ impl<K: Middleware> Bot<K> {
 
             let gas_estimate = self.provider.estimate_gas(&beat_tx, None).await.unwrap();
             let gas_price = self.provider.get_gas_price().await.unwrap();
-            let gas_cost_dollar = gas_estimate * gas_price * eth_price * U256::from(1e-18 as u64);
+            let gas_cost_dollar = gas_estimate * gas_price * eth_price / (1e+18 as u64);
             let reward_in_dollar = reward_in_ohm * ohm_price / 1_000_000_000;
             println!("{} blocks into the auction", block_counter);
             println!("Current rewards in dollar {}", reward_in_dollar);
