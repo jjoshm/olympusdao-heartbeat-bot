@@ -13,7 +13,7 @@ use ethers::{
 };
 use indicatif::{ProgressBar, ProgressState, ProgressStyle};
 use reqwest::Client;
-use std::{fmt::Write, u128};
+use std::fmt::Write;
 use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
