@@ -91,6 +91,7 @@ impl<K: Middleware> Bot<K> {
                 }
             }) * (1e6 as f64)) as u64,
         );
+
         let ohm_price = U256::from(
             ((match get_token_price(&self.web_client, "olympus").await {
                 Ok(price) => price,
@@ -117,8 +118,8 @@ impl<K: Middleware> Bot<K> {
 
             let gas_estimate = self.provider.estimate_gas(&beat_tx, None).await.unwrap();
             let gas_price = self.provider.get_gas_price().await.unwrap();
-            let gas_cost_dollar = (gas_estimate * gas_price * eth_price) / U256::from(1e6 as u64);
-            let reward_in_dollar = (reward_in_ohm * ohm_price) / U256::from(1e6 as u64);
+            let gas_cost_dollar = gas_estimate * gas_price * eth_price * U256::from(1e-18 as u64);
+            let reward_in_dollar = reward_in_ohm * ohm_price / 1_000_000_000;
             println!("{} blocks into the auction", block_counter);
             println!("Current rewards in dollar {}", reward_in_dollar);
             println!("Current gas costs in dollar {}", gas_cost_dollar);
